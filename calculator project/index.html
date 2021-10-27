@@ -9,14 +9,15 @@
   </head>
   <body>
     <div class="calculator">
-      <input type="text" class="calculator-input" value="" disabled />
+      <input type="text" class="calculator-input" value="0" disabled />
       <div class="calculator-keys">
         <button type="button" class="operator" value="+">+</button>
         <button type="button" class="operator" value="-">-</button>
         <button type="button" class="operator" value="*">&times;</button>
         <button type="button" class="operator" value="/">&divide;</button>
-        <button type="button" class="operator">^</button>
-        <button type="button" class="operator">%</button>
+        <button type="button" class="operator" value="pow">^</button>
+        <button type="button" class="operator" value="mod">%</button>
+        <button type="button" class="operator" value="int-div">//</button>
         <button type="button" value="0">0</button>
         <button type="button" value="1">1</button>
         <button type="button" value="2">2</button>
@@ -28,8 +29,8 @@
         <button type="button" value="8">8</button>
         <button type="button" value="9">9</button>
         <button type="button" class="decimal" value=".">.</button>
-        <button type="button" value="clear">AC</button>
         <button type="button" class="equal-sign operator" value="=">=</button>
+        <button type="button" value="clear" id="clear-all">AC</button>
       </div>
     </div>
     <script src="script.js"></script>
