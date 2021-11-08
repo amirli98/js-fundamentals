@@ -1,6 +1,9 @@
 const display = document.querySelector(".calculator-input");
 const keys = document.querySelector(".calculator-keys");
 let displayValue = "0";
+let firstValue = null;
+let operator = null;
+let waiting = false;
 
 const updateDisplayValue = () => {
   display.value = displayValue;
@@ -14,7 +17,9 @@ keys.addEventListener("click", function (e) {
   if (!element.matches("button")) return;
 
   if (element.classList.contains("operator")) {
-    console.log("operator", element.value);
+    //console.log("operator", element.value);
+
+    handleOperator(element.value);
     return;
   }
 
@@ -34,8 +39,48 @@ keys.addEventListener("click", function (e) {
   updateDisplayValue();
 });
 
+function handleOperator(nextOperator) {
+  const value = parseFloat(displayValue);
+  if (firstValue === null) {
+    firstValue = value;
+  } else if (operator) {
+    const result = calculate(firstValue, value, operator);
+    displayValue = result;
+    updateDisplayValue();
+  }
+  waiting = true;
+  operator = nextOperator;
+}
+
+function calculate(firstValue, value, operator) {
+  switch (operator) {
+    case "+":
+      return parseFloat(firstValue) + parseFloat(value);
+    case "-":
+      return parseFloat(firstValue) - parseFloat(value);
+    case "/":
+      return parseFloat(firstValue) / parseFloat(value);
+    case "%":
+      return parseInt(firstValue) % parseInt(value);
+    case "//":
+      return parseInt(parseInt(firstValue) / parseInt(value));
+    case "*":
+      return parseFloat(firstValue) * parseFloat(value);
+    case "^":
+      return parseFloat(firstValue) ** parseFloat(value);
+    default:
+      return 0;
+  }
+}
+
 function inputNumber(num) {
-  displayValue = displayValue === "0" ? num : displayValue + num;
+  if (waiting) {
+    displayValue = num;
+    waiting = false;
+  } else {
+    displayValue = displayValue === "0" ? num : displayValue + num;
+  }
+  console.log(firstValue, operator, waiting);
 }
 
 function inputDecimal() {
