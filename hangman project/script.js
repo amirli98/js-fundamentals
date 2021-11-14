@@ -14,8 +14,6 @@ let correctLetters = [];
 const popup = document.getElementById("popup-container");
 const playAgain = document.querySelector(".play-again");
 const message_element = document.getElementById("success-message");
-const failure_message = document.getElementById("failure-message");
-const failure = document.getElementsByClassName("failure")[0];
 function getRandomWord() {
   const words = [
     "javascript",
