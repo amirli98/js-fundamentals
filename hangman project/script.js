@@ -6,12 +6,16 @@ const alphabet = Array.from(Array(26))
 
 const wrongLetters_element = document.getElementById("wrong-letters");
 
+const items = document.querySelectorAll(".item");
+
 let wrongLetters = [];
 let selectedWord = getRandomWord();
 let correctLetters = [];
 const popup = document.getElementById("popup-container");
-const playAgain = document.getElementById("play-again");
+const playAgain = document.querySelector(".play-again");
 const message_element = document.getElementById("success-message");
+const failure_message = document.getElementById("failure-message");
+const failure = document.getElementsByClassName("failure")[0];
 function getRandomWord() {
   const words = [
     "javascript",
@@ -72,6 +76,19 @@ function updateWrongLetters() {
   ${wrongLetters.length > 0 ? "<h3>Wrong letters:</h3> <br>" : ""}
   ${wrongLetters.map((letter) => `<span>${letter}</span>`)}
   `;
+  items.forEach((item, index) => {
+    const errorCount = wrongLetters.length;
+    if (index < errorCount) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+
+  if (wrongLetters.length === items.length) {
+    message_element.innerText = "You lost! Try again!";
+    popup.style.display = "flex";
+  }
 }
 
 window.addEventListener("keydown", function (e) {
@@ -102,5 +119,7 @@ playAgain.addEventListener("click", (e) => {
   popup.style.display = "none";
   selectedWord = getRandomWord();
   wrongLetters_element.innerHTML = "";
+  popup.style.display = "none";
+  items.forEach((item) => (item.style.display = "none"));
   displayWord();
 });
